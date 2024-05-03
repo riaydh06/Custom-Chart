@@ -54,11 +54,17 @@ function BarChart({ configs }: Props) {
       {Array.from({ length: numYTicks }).map((_, index) => {
         const y = y0 + index * (yAxisLength / numYTicks);
 
-        const yValue = Math.round(dataYMax - index * (dataYRange / numYTicks));
+        const yValue = (dataYMax - index * (dataYRange / numYTicks)).toFixed(1);
 
         return (
           <g key={index}>
-            <line x1={x0} y1={y} x2={x0 - 5} y2={y} stroke="grey" />
+            <line
+              x1={x0}
+              y1={y}
+              x2={x0 + xAxisLength}
+              y2={y}
+              stroke="rgba(201, 203, 207, 0.4)"
+            />
             <text x={x0 - 5} y={y + 5} textAnchor="end">
               {yValue}
             </text>
@@ -73,14 +79,14 @@ function BarChart({ configs }: Props) {
       {labels.map((label, index) => {
         const x = x0 + index * barPlotWidth;
 
-        const yRatio = (data[index] - dataYMin) / dataYRange;
+        const yRatio = data[index] / dataYRange;
 
         const y = y0 + (1 - yRatio) * yAxisLength;
         const height = yRatio * yAxisLength;
 
         const sidePadding = 10;
 
-        console.log({ x, yRatio, y, height, dd: data[index] });
+        // console.log({ x, yRatio, y, height, dd: data[index] });
 
         return (
           <g key={index}>

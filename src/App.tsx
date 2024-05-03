@@ -3,7 +3,7 @@ import BarChart from "./graph/BarChart";
 
 const data = {
   labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-  data: [12, 14, 11, 14, 15, 2, 13],
+  data: [2, 14, 11, 14, 15, 32, 13],
   backgroundColor: [
     "rgba(255, 99, 132, 0.2)",
     "rgba(255, 159, 64, 0.2)",
