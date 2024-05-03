@@ -23,7 +23,7 @@ const configs = {
   borderWidth: 1,
 };
 const labels1 = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const data1 = [2, 8, 14, 15, 16, 32, 40];
+const data1 = [2, 28, 14, 15, 16, 32, 40];
 
 const labels2 = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const data2 = [5, 8, 13, 15, 16, 32, 50];
