@@ -5,6 +5,8 @@ interface Props {
   labels: string[];
   data: number[];
   configs: {
+    xAxisName?: string;
+    YAxisName?: string;
     backgroundColor?: string[];
     borderColor?: string[];
     borderWidth?: number;
@@ -12,7 +14,8 @@ interface Props {
 }
 
 function BarChart({ configs, data, labels }: Props) {
-  const { backgroundColor, borderColor, borderWidth } = configs;
+  const { backgroundColor, borderColor, borderWidth, xAxisName, YAxisName } =
+    configs;
   const x0 = 50;
   const xAxisLength = SVG_WIDTH - x0 * 2;
 
@@ -43,7 +46,7 @@ function BarChart({ configs, data, labels }: Props) {
         stroke="grey"
       />
       <text x={x0 + xAxisLength + 5} y={xAxisY + 4}>
-        Day
+        {xAxisName}
       </text>
 
       {/* Y axis */}
@@ -69,7 +72,7 @@ function BarChart({ configs, data, labels }: Props) {
         );
       })}
       <text x={x0} y={y0 - 8} textAnchor="middle">
-        $
+        {YAxisName}
       </text>
 
       {/* Bar plots */}
