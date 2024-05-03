@@ -2,17 +2,17 @@ const SVG_WIDTH = 600;
 const SVG_HEIGHT = 300;
 
 interface Props {
+  labels: string[];
+  data: number[];
   configs: {
-    labels: string[];
-    data: number[];
     backgroundColor?: string[];
     borderColor?: string[];
     borderWidth?: number;
   };
 }
 
-function BarChart({ configs }: Props) {
-  const { labels, data, backgroundColor, borderColor, borderWidth } = configs;
+function BarChart({ configs, data, labels }: Props) {
+  const { backgroundColor, borderColor, borderWidth } = configs;
   const x0 = 50;
   const xAxisLength = SVG_WIDTH - x0 * 2;
 
@@ -48,10 +48,8 @@ function BarChart({ configs }: Props) {
 
       {/* Y axis */}
       <line x1={x0} y1={y0 + yAxisLength} x2={x0} y2={y0} stroke="grey" />
-      {Array.from({ length: numYTicks }).map((_, index) => {
+      {Array.from({ length: numYTicks + 1 }).map((_, index) => {
         const y = y0 + index * (yAxisLength / numYTicks);
-
-        console.log({ y0, y, yAxisLength, dataYRange });
 
         const yValue = (dataYMax - index * (dataYRange / numYTicks)).toFixed(1);
 
