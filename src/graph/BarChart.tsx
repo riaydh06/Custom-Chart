@@ -25,11 +25,8 @@ function BarChart({ configs }: Props) {
     (currMax, dataY) => Math.max(currMax, dataY),
     -Infinity
   );
-  const dataYMin = data.reduce(
-    (currMin, dataY) => Math.min(currMin, dataY),
-    Infinity
-  );
-  const dataYRange = dataYMax - dataYMin;
+
+  const dataYRange = dataYMax;
 
   const numYTicks = 5;
 
@@ -50,9 +47,11 @@ function BarChart({ configs }: Props) {
       </text>
 
       {/* Y axis */}
-      <line x1={x0} y1={y0} x2={x0} y2={y0 + yAxisLength} stroke="grey" />
+      <line x1={x0} y1={y0 + yAxisLength} x2={x0} y2={y0} stroke="grey" />
       {Array.from({ length: numYTicks }).map((_, index) => {
         const y = y0 + index * (yAxisLength / numYTicks);
+
+        console.log({ y0, y, yAxisLength, dataYRange });
 
         const yValue = (dataYMax - index * (dataYRange / numYTicks)).toFixed(1);
 
@@ -85,8 +84,6 @@ function BarChart({ configs }: Props) {
         const height = yRatio * yAxisLength;
 
         const sidePadding = 10;
-
-        // console.log({ x, yRatio, y, height, dd: data[index] });
 
         return (
           <g key={index}>
