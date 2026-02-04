@@ -10,6 +10,7 @@ function Axis({
   YAxisName,
   numYTicks = 5,
   dataYMax,
+  dataYMin = 0,
 }: {
   x0: number;
   xAxisY: number;
@@ -20,7 +21,10 @@ function Axis({
   YAxisName?: string;
   numYTicks?: number;
   dataYMax: number;
+  dataYMin?: number;
 }) {
+  const valueRange = dataYMax - dataYMin;
+  
   return (
     <>
       {/* X axis */}
@@ -40,7 +44,7 @@ function Axis({
       {Array.from({ length: numYTicks + 1 }).map((_, index) => {
         const y = y0 + index * (yAxisLength / numYTicks);
 
-        const yValue = (dataYMax - index * (dataYMax / numYTicks)).toFixed(1);
+        const yValue = (dataYMax - index * (valueRange / numYTicks)).toFixed(1);
 
         return (
           <g key={index}>
