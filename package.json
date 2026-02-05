@@ -1,28 +1,44 @@
 {
-  "name": "my-chart",
+  "name": "custom-chart",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.96",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+  "description": "A customizable React chart library with multiple chart types including bar, line, area, pie, donut, and more",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "react",
+    "chart",
+    "charts",
+    "graph",
+    "visualization",
+    "bar-chart",
+    "line-chart",
+    "pie-chart",
+    "area-chart",
+    "donut-chart"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "react-scripts test --watchAll=false --forceExit",
+    "test:watch": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false --forceExit",
+    "build:lib": "rollup -c",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepublishOnly": "npm run build:lib"
   },
   "eslintConfig": {
     "extends": [
@@ -44,14 +60,28 @@
     ]
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^4.9.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.96",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "storybook": "^10.2.6",
     "@storybook/react-webpack5": "^10.2.6",
     "@storybook/preset-create-react-app": "^10.2.6",
     "@storybook/addon-a11y": "^10.2.6",
     "@storybook/addon-docs": "^10.2.6",
     "@storybook/addon-onboarding": "^10.2.6",
-    "webpack": "^5.105.0",
-    "prop-types": "^15.8.1",
-    "eslint-plugin-storybook": "^10.2.6"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.0",
+    "eslint-plugin-storybook": "^10.2.6",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5"
   }
 }

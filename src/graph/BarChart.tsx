@@ -73,7 +73,7 @@ function BarChart({ configs, data, labels }: Props) {
               height={height}
               fill={backgroundColor?.[index] || "black"}
               stroke={borderColor?.[index] || "black"}
-              strokeWidth={borderWidth || 1}
+              strokeWidth={borderWidth !== undefined ? borderWidth : 1}
             />
             <text x={x + barPlotWidth / 2} y={xAxisY + 16} textAnchor="middle">
               {label}

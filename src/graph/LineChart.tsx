@@ -42,30 +42,33 @@ function LineChart({ configs, data, labels }: Props) {
 
   const xAxisY = y0 + yAxisLength;
 
-  const dataYMax = data.reduce(
-    (currMax, dataY) => Math.max(currMax, dataY),
-    -Infinity
-  );
+  const dataYMax = data.length > 0
+    ? data.reduce((currMax, dataY) => Math.max(currMax, dataY), -Infinity)
+    : 0;
 
   // Calculate points for the line
-  const pointSpacing = xAxisLength / (data.length - 1);
+  const pointSpacing = data.length > 1 ? xAxisLength / (data.length - 1) : 0;
   const points = data.map((value, index) => {
-    const x = x0 + index * pointSpacing;
-    const yRatio = value / dataYMax;
+    const x = data.length > 1 ? x0 + index * pointSpacing : x0 + xAxisLength / 2;
+    const yRatio = dataYMax > 0 ? value / dataYMax : 0;
     const y = y0 + (1 - yRatio) * yAxisLength;
     return { x, y, value };
   });
 
   // Create line path
   const createLinePath = () => {
+    if (points.length === 0) return '';
+    if (points.length === 1) {
+      return `M ${points[0].x} ${points[0].y}`;
+    }
+
     const pathParts: string[] = [];
-    
     pathParts.push(`M ${points[0].x} ${points[0].y}`);
-    
+
     for (let i = 1; i < points.length; i++) {
       pathParts.push(`L ${points[i].x} ${points[i].y}`);
     }
-    
+
     return pathParts.join(' ');
   };
 
@@ -82,16 +85,18 @@ function LineChart({ configs, data, labels }: Props) {
         numYTicks={numYTicks}
         dataYMax={dataYMax}
       />
-      
+
       {/* Line */}
-      <path
-        d={createLinePath()}
-        fill="none"
-        stroke={strokeColor}
-        strokeWidth={strokeWidth}
-        strokeDasharray={lineDashArray}
-      />
-      
+      {points.length > 0 && (
+        <path
+          d={createLinePath()}
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+          strokeDasharray={lineDashArray}
+        />
+      )}
+
       {/* Data points */}
       {showPoints && points.map((point, index) => (
         <g key={index}>
@@ -105,10 +110,12 @@ function LineChart({ configs, data, labels }: Props) {
           />
         </g>
       ))}
-      
+
       {/* X-axis labels */}
       {labels.map((label, index) => {
-        const x = x0 + index * pointSpacing;
+        const x = data.length > 1
+          ? x0 + index * pointSpacing
+          : x0 + xAxisLength / 2;
         return (
           <text
             key={index}

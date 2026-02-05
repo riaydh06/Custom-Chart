@@ -1,46 +1,201 @@
-# Getting Started with Create React App
+# Custom Chart
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A lightweight, customizable React chart library with multiple chart types built with SVG.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+```bash
+npm install custom-chart
+# or
+yarn add custom-chart
+```
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- 🎨 **Multiple Chart Types**: Bar, Line, Area, Pie, Donut, Polar, and more
+- 🎯 **Highly Customizable**: Extensive configuration options for colors, labels, legends, and animations
+- 📦 **Lightweight**: No heavy dependencies, built with pure React and SVG
+- 🎭 **TypeScript Support**: Full TypeScript definitions included
+- ⚡ **Performance Optimized**: Efficient rendering with memoization
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Available Charts
 
-### `npm test`
+- **BarChart** - Vertical bar charts
+- **LineChart** - Line charts with customizable styling
+- **AreaChart** - Area charts with fill colors
+- **PieChart** - Pie charts with legend support
+- **DonutChart** - Donut charts with customizable inner radius
+- **VariableRadiusPieChart** - Pie charts with variable segment sizes
+- **StackedColumnChart** - Stacked column charts
+- **GroupedColumnChart** - Grouped column charts
+- **LineRaceChart** - Animated racing line charts
+- **ColumnRangeChart** - Column range charts
+- **PolarChart** - Polar/Radar charts
+- **PieDrilldownChart** - Pie charts with drilldown functionality
+- **RadialBarChart** - Radial bar charts
+- **DualAxesChart** - Charts with dual Y-axes
+- **SynchronizedCharts** - Multiple synchronized charts
+- **ColumnWithNegativeChart** - Column charts supporting negative values
+- **MultiAreaChart** - Multiple overlapping or stacked area charts
+- **MultiLineChart** - Multiple line charts
+- **AnimatedLineChart** - Line charts with custom entrance animations
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Quick Start
 
-### `npm run build`
+```tsx
+import React from 'react';
+import { BarChart } from 'custom-chart';
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+function App() {
+  const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
+  const data = [10, 20, 30, 40, 50];
+  
+  const configs = {
+    xAxisName: 'Month',
+    YAxisName: 'Sales',
+    backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6'],
+    borderColor: ['#2980b9', '#27ae60', '#c0392b', '#e67e22', '#8e44ad'],
+    borderWidth: 2,
+    numYTicks: 5
+  };
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  return (
+    <BarChart
+      labels={labels}
+      data={data}
+      configs={configs}
+    />
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default App;
+```
 
-### `npm run eject`
+## Examples
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Line Chart
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```tsx
+import { LineChart } from 'custom-chart';
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<LineChart
+  labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri']}
+  data={[20, 25, 30, 22, 28]}
+  configs={{
+    xAxisName: 'Day',
+    YAxisName: 'Temperature (°C)',
+    strokeColor: '#3498db',
+    strokeWidth: 2,
+    showPoints: true
+  }}
+/>
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Pie Chart
 
-## Learn More
+```tsx
+import { PieChart } from 'custom-chart';
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<PieChart
+  labels={['Red', 'Blue', 'Green', 'Yellow']}
+  data={[30, 25, 20, 25]}
+  configs={{
+    showLegend: true,
+    legendPosition: 'right',
+    backgroundColor: ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f']
+  }}
+/>
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Donut Chart
+
+```tsx
+import { DonutChart } from 'custom-chart';
+
+<DonutChart
+  labels={['Desktop', 'Mobile', 'Tablet']}
+  data={[60, 30, 10]}
+  configs={{
+    innerRadius: 50,
+    showLegend: true,
+    backgroundColor: ['#3498db', '#2ecc71', '#e74c3c']
+  }}
+/>
+```
+
+### Animated Line Chart
+
+```tsx
+import { AnimatedLineChart } from 'custom-chart';
+
+<AnimatedLineChart
+  labels={['Q1', 'Q2', 'Q3', 'Q4']}
+  series={[
+    {
+      data: [10, 20, 15, 25],
+      label: 'Sales',
+      strokeColor: '#3498db',
+      showPoints: true
+    },
+    {
+      data: [5, 15, 10, 20],
+      label: 'Revenue',
+      strokeColor: '#2ecc71',
+      showPoints: true
+    }
+  ]}
+  configs={{
+    animationType: 'draw',
+    animationDuration: 1500,
+    enableAnimation: true,
+    showLegend: true
+  }}
+/>
+```
+
+## Configuration Options
+
+Each chart type has its own configuration options. Common options include:
+
+- `xAxisName` - Label for X-axis
+- `YAxisName` - Label for Y-axis
+- `numYTicks` - Number of Y-axis ticks
+- `showLegend` - Show/hide legend
+- `legendPosition` - Position of legend ('top', 'bottom', 'left', 'right')
+- `backgroundColor` - Array of background colors
+- `borderColor` - Array of border colors
+- `borderWidth` - Border width
+
+See individual chart documentation for specific options.
+
+## TypeScript
+
+Full TypeScript support is included. All components are typed and exported with their interfaces.
+
+```tsx
+import { BarChart, LineChart } from 'custom-chart';
+```
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run Storybook for development
+npm run storybook
+
+# Build library
+npm run build:lib
+
+# Build Storybook
+npm run build-storybook
+```
+
+## License
+
+MIT
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
