@@ -190,7 +190,36 @@ npm run build:lib
 
 # Build Storybook
 npm run build-storybook
+
+# Build Storybook for GitHub Pages
+npm run build-storybook:gh-pages
 ```
+
+## GitHub Pages Deployment
+
+This project includes automatic deployment of Storybook to GitHub Pages via GitHub Actions.
+
+### Setup Instructions:
+
+1. **Enable GitHub Pages** in your repository settings:
+   - Go to Settings → Pages
+   - Source: Select "GitHub Actions"
+
+2. **Update repository name** (if different):
+   - If your repository name is not "Custom-Chart", update the base path in:
+     - `package.json` → `build-storybook:gh-pages` script
+     - Replace `/Custom-Chart` with `/{your-repo-name}`
+
+3. **Automatic Deployment**:
+   - Push to `main` or `master` branch
+   - GitHub Actions will automatically build and deploy Storybook
+   - Your Storybook will be available at: `https://{username}.github.io/{repo-name}/`
+
+4. **Manual Deployment**:
+   ```bash
+   npm run build-storybook:gh-pages
+   # Then push the storybook-static folder to gh-pages branch
+   ```
 
 ## License
 
