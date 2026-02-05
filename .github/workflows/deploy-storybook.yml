@@ -33,13 +33,19 @@ jobs:
         run: npm install
 
       - name: Build Storybook
-        run: npm run build-storybook
-
-      - name: Update paths for GitHub Pages
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
+          # Build Storybook with explicit output directory
+          npm run build-storybook:gh-pages
+          # Verify the directory was created
+          if [ ! -d "storybook-static" ]; then
+            echo "Error: storybook-static directory not found after build"
+            ls -la
+            exit 1
+          fi
+          # Update paths for GitHub Pages
           cd storybook-static
           # Update HTML files
           find . -name "*.html" -type f -exec sed -i "s|href=\"/|href=\"/$REPO_NAME/|g" {} \;
@@ -50,11 +56,6 @@ jobs:
           # Update JSON files
           find . -name "*.json" -type f -exec sed -i "s|\"/static/|\"/$REPO_NAME/static/|g" {} \;
           find . -name "*.json" -type f -exec sed -i "s|\"/iframe.html|\"/$REPO_NAME/iframe.html|g" {} \;
-          # Update base path in built files for GitHub Pages
-          find storybook-static -name "*.html" -type f -exec sed -i "s|href=\"/|href=\"/$REPO_NAME/|g" {} \;
-          find storybook-static -name "*.html" -type f -exec sed -i "s|src=\"/|src=\"/$REPO_NAME/|g" {} \;
-          find storybook-static -name "*.js" -type f -exec sed -i "s|/static/|/$REPO_NAME/static/|g" {} \;
-          find storybook-static -name "*.json" -type f -exec sed -i "s|\"/static/|\"/$REPO_NAME/static/|g" {} \;
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
