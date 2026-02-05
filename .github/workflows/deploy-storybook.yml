@@ -33,11 +33,28 @@ jobs:
         run: npm install
 
       - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Update paths for GitHub Pages
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
-          npx storybook build -o storybook-static -- --base=/$REPO_NAME
+          cd storybook-static
+          # Update HTML files
+          find . -name "*.html" -type f -exec sed -i "s|href=\"/|href=\"/$REPO_NAME/|g" {} \;
+          find . -name "*.html" -type f -exec sed -i "s|src=\"/|src=\"/$REPO_NAME/|g" {} \;
+          # Update JavaScript files
+          find . -name "*.js" -type f -exec sed -i "s|/static/|/$REPO_NAME/static/|g" {} \;
+          find . -name "*.js" -type f -exec sed -i "s|\"/iframe.html|\"/$REPO_NAME/iframe.html|g" {} \;
+          # Update JSON files
+          find . -name "*.json" -type f -exec sed -i "s|\"/static/|\"/$REPO_NAME/static/|g" {} \;
+          find . -name "*.json" -type f -exec sed -i "s|\"/iframe.html|\"/$REPO_NAME/iframe.html|g" {} \;
+          # Update base path in built files for GitHub Pages
+          find storybook-static -name "*.html" -type f -exec sed -i "s|href=\"/|href=\"/$REPO_NAME/|g" {} \;
+          find storybook-static -name "*.html" -type f -exec sed -i "s|src=\"/|src=\"/$REPO_NAME/|g" {} \;
+          find storybook-static -name "*.js" -type f -exec sed -i "s|/static/|/$REPO_NAME/static/|g" {} \;
+          find storybook-static -name "*.json" -type f -exec sed -i "s|\"/static/|\"/$REPO_NAME/static/|g" {} \;
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
