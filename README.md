@@ -201,25 +201,32 @@ This project includes automatic deployment of Storybook to GitHub Pages via GitH
 
 ### Setup Instructions:
 
-1. **Enable GitHub Pages** in your repository settings:
+1. **Update package-lock.json** (if needed):
+   ```bash
+   npm install
+   ```
+   This ensures your lock file is in sync with package.json.
+
+2. **Enable GitHub Pages** in your repository settings:
    - Go to Settings → Pages
    - Source: Select "GitHub Actions"
-
-2. **Update repository name** (if different):
-   - If your repository name is not "Custom-Chart", update the base path in:
-     - `package.json` → `build-storybook:gh-pages` script
-     - Replace `/Custom-Chart` with `/{your-repo-name}`
 
 3. **Automatic Deployment**:
    - Push to `main` or `master` branch
    - GitHub Actions will automatically build and deploy Storybook
    - Your Storybook will be available at: `https://{username}.github.io/{repo-name}/`
+   - The workflow automatically detects your repository name and sets the correct base path
 
 4. **Manual Deployment**:
    ```bash
    npm run build-storybook:gh-pages
-   # Then push the storybook-static folder to gh-pages branch
+   # Then manually push the storybook-static folder if needed
    ```
+
+### Troubleshooting:
+
+- If you see lock file errors, run `npm install` locally and commit the updated `package-lock.json`
+- The workflow uses Node.js 20 to satisfy all dependency requirements
 
 ## License
 
